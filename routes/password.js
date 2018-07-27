@@ -5,6 +5,7 @@ var username;
 var password;
 
 router.post('/', function(req, response, next) {
+  console.log("Hello from password");
     var con = mysql.createConnection(
       {
         host:"localhost",
@@ -22,14 +23,15 @@ router.post('/', function(req, response, next) {
     console.log(req.body);
     username = req.body.username;
     password = req.body.password;
+    //role = req.body.role;
    
     con.query('SELECT password FROM `students` where `rollno` = ? and `password` = ?',[username],[password],function(err,res,fields)
     {
       if(err) throw err;
       if(password==res.password)
-        response.send(200,'Password Correct');
-    else
-        response.send(500,'Password Incorrect');
+        response.send({"success":true});
+      else
+        response.send({"success":false});
 
      });
     

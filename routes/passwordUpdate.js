@@ -4,6 +4,7 @@ var router= express.Router();
 var username;
 var password;
 var message;
+var role;
 
 router.post('/', function(req, response, next) {
     var con = mysql.createConnection(
@@ -23,7 +24,9 @@ router.post('/', function(req, response, next) {
     console.log(req.body);
     username = req.body.username;
     password = req.body.password;
-   
+   role = req.body.role;
+   if(role=='students')
+   {
     con.query('UPDATE `students` SET `password`= ? WHERE `rollno`= ?',[password , username],function(err,results)
     {
       if(err) throw err;
@@ -39,6 +42,25 @@ router.post('/', function(req, response, next) {
       
     response.send(200,message);
      });
+    }
+    else if(role=='staff')
+    {
+        con.query('UPDATE `staffs` SET `password`= ? WHERE `staffid`= ?',[password , username],function(err,results)
+    {
+      if(err) throw err;
+      if(results.affectedRows==1)
+        message={
+            affectedRows:"1"
+        };
+        else
+            message={
+                affectedRows:"0"
+            }
+        
+      
+    response.send(200,message);
+     });
+    }
     
   });
   
