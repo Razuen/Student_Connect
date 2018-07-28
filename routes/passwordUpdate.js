@@ -40,12 +40,12 @@ router.post('/', function(req, response, next) {
             }
         
       
-    response.send(200,message);
+    
      });
     }
     else if(role=='staff')
     {
-        con.query('UPDATE `staffs` SET `password`= ? WHERE `staffid`= ?',[password , username],function(err,results)
+        con.query('UPDATE `staffs` SET `password`= ? WHERE `staffid`= ?',[password , username],function(err,results,fields)
     {
       if(err) throw err;
       if(results.affectedRows==1)
@@ -58,10 +58,10 @@ router.post('/', function(req, response, next) {
             }
         
       
-    response.send(200,message);
+   
      });
     }
-    
+    response.status(200).send(message);
   });
   
   module.exports = router;

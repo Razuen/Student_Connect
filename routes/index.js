@@ -17,7 +17,10 @@ router.post('/', function(req, response, next) {
   );
   con.connect(function(err)
   {
-    if (err) throw err;
+    if (err)
+    { 
+      throw err;
+    }
     console.log("connected!");
   });
   
@@ -42,7 +45,7 @@ router.post('/', function(req, response, next) {
     });
   }
   
-    response.send(200,message);
+    response.status(200).send(message);
   
 });
 

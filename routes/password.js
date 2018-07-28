@@ -1,40 +1,55 @@
 var express = require('express');
+var router = express.Router();
 var mysql = require('mysql');
-var router= express.Router();
+var connection;
 var username;
 var password;
-
-router.post('/', function(req, response, next) {
-  console.log("Hello from password");
-    var con = mysql.createConnection(
-      {
-        host:"localhost",
-        user:"root",
-        password:"",
-        database:"app"
-      }
-    );
-    con.connect(function(err)
+var role;
+var message;
+router.post('/',function(req,response,next)
+{
+  connection=mysql.createConnection(
     {
-      if (err) throw err;
-      console.log("connected!");
-    });
-    
-    console.log(req.body);
-    username = req.body.username;
-    password = req.body.password;
-    //role = req.body.role;
-   
-    con.query('SELECT password FROM `students` where `rollno` = ? and `password` = ?',[username],[password],function(err,res,fields)
+      host:"localhost",
+      user:"root",
+      password:"",
+      database:"app"
+    }
+  );
+  connection.connect(function(err)
+  {
+    if(err)
     {
-      if(err) throw err;
-      if(password==res.password)
-        response.send({"success":true});
-      else
-        response.send({"success":false});
-
-     });
-    
+       throw err;
+    }
+    console.log('connected');
   });
-  
-  module.exports = router;
+  username = req.body.username;
+  password = req.body.password;
+  role = req.body.role;
+  if(role=='students')
+  {
+   
+    connection.query('SELECT password from `students` where rollno=?',[username],function(err,res,fields)
+    {
+     // console.log(res[0].password);
+      if(res.password==password)
+      {
+        /*message={
+          status:"True"
+        };*/
+        console.log('True');
+      }
+      else
+      {
+        /*message={
+          status:"False"
+        };*/
+        console.log('False');
+        console.log(message);
+      }
+    });
+  }
+  response.status(200).send(message);
+});
+module.exports = router;
