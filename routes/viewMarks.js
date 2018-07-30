@@ -7,10 +7,10 @@ var username;
 router.post('/', function(req, response, next) {
     var con = mysql.createConnection(
       {
-        host:"localhost",
-        user:"root",
-        password:"",
-        database:"app"
+        host:"db4free.net",
+        user:"sabari",
+        password:"sabari.b",
+        database:"student_connect"
       }
     );
     con.connect(function(err)

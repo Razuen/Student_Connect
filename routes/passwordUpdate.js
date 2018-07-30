@@ -2,18 +2,19 @@ var express = require('express');
 var mysql = require('mysql');
 var router= express.Router();
 var username;
-var password;
+var oldPassword;
+var newPassword;
 var message;
 var role;
 
 router.post('/', function(req, response, next) {
     var con = mysql.createConnection(
-      {
-        host:"localhost",
-        user:"root",
-        password:"",
-        database:"app"
-      }
+        {
+            host:"db4free.net",
+            user:"sabari",
+            password:"sabari.b",
+            database:"student_connect"
+          }
     );
     con.connect(function(err)
     {
@@ -23,10 +24,28 @@ router.post('/', function(req, response, next) {
     
     console.log(req.body);
     username = req.body.username;
-    password = req.body.password;
+    oldPassword = req.body.oldPassword;
+    newPassword = req.body.newPassword;
    role = req.body.role;
    if(role=='students')
    {
+    
+   
+    connection.query('SELECT password from `students` where rollno=?',[username],function(err,res,fields)
+    {
+    // console.log(res[0].password);
+    if(res.password==oldPassword)
+    {
+        message='TRUE';
+    }
+    else
+    {
+        message='FALSE';
+        response.status(500).send(message);
+        
+      
+    }
+    });
     con.query('UPDATE `students` SET `password`= ? WHERE `rollno`= ?',[password , username],function(err,results)
     {
       if(err) throw err;

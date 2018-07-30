@@ -9,10 +9,10 @@ var message;
 router.post('/', function(req, response, next) {
   var con = mysql.createConnection(
     {
-      host:"localhost",
-      user:"root",
-      password:"",
-      database:"app"
+      host:"db4free.net",
+      user:"sabari",
+      password:"sabari.b",
+      database:"student_connect"
     }
   );
   con.connect(function(err)
@@ -32,7 +32,9 @@ router.post('/', function(req, response, next) {
     con.query('SELECT name FROM `students` where `rollno` = ? ',[username],function(err,res,fields)
     {
       if(err) throw err;
-      message = res;
+      message = {
+        flag:"true"
+      };
     });
   }
   else if(role=='faculty')
@@ -40,7 +42,9 @@ router.post('/', function(req, response, next) {
     con.query('SELECT name FROM `staffs` where `staffid` = ? ',[username],function(err,res,fields)
     {
       if(err) throw err;
-      message = res;
+      message ={
+        flag:"false"
+      };
       //len=res.Length;
     });
   }

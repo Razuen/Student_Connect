@@ -10,10 +10,10 @@ router.post('/',function(req,response,next)
 {
   connection=mysql.createConnection(
     {
-      host:"localhost",
-      user:"root",
-      password:"",
-      database:"app"
+      host:"db4free.net",
+      user:"sabari",
+      password:"sabari.b",
+      database:"student_connect"
     }
   );
   connection.connect(function(err)
@@ -35,18 +35,41 @@ router.post('/',function(req,response,next)
      // console.log(res[0].password);
       if(res.password==password)
       {
-        /*message={
+        message={
           status:"True"
-        };*/
-        console.log('True');
+        };
+        //console.log('True');
       }
       else
       {
-        /*message={
+        message={
           status:"False"
-        };*/
-        console.log('False');
-        console.log(message);
+        };
+       // console.log('False');
+        
+      }
+    });
+  }
+  else if(role=='staffs')
+  {
+   
+    connection.query('SELECT password from `staffs` where satffid=?',[username],function(err,res,fields)
+    {
+     // console.log(res[0].password);
+      if(res.password==password)
+      {
+        message={
+          status:"True"
+        };
+        //console.log('True');
+      }
+      else
+      {
+        message={
+          status:"False"
+        };
+       // console.log('False');
+        
       }
     });
   }
