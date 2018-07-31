@@ -32,47 +32,39 @@ router.post('/',function(req,response,next)
    
     connection.query('SELECT password from `students` where rollno=?',[username],function(err,res,fields)
     {
-     // console.log(res[0].password);
       if(res.password==password)
       {
         message={
           status:"True"
         };
-        //console.log('True');
       }
       else
       {
         message={
           status:"False"
         };
-       // console.log('False');
-        
       }
     });
   }
   else if(role=='staffs')
   {
    
-    connection.query('SELECT password from `staffs` where satffid=?',[username],function(err,res,fields)
+    connection.query('SELECT password from `faculty` where faculty_id=?',[username],function(err,res,fields)
     {
-     // console.log(res[0].password);
       if(res.password==password)
       {
         message={
           status:"True"
         };
-        //console.log('True');
       }
       else
       {
         message={
           status:"False"
         };
-       // console.log('False');
-        
       }
     });
   }
-  response.status(200).send(message);
+response.status(200).send(message);
 });
 module.exports = router;
