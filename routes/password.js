@@ -60,11 +60,13 @@ router.post('/',function(req,response,next)
       else
       {
         message={
-          status:"False"
+          status:"False",
+          text:"This is to test push from contributor"
         };
       }
     });
   }
 response.status(500).send(message);
+
 });
 module.exports = router;
